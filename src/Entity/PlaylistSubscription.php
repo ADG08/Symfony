@@ -3,9 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\PlaylistSubscriptionRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlaylistSubscriptionRepository::class)]
@@ -16,100 +13,54 @@ class PlaylistSubscription
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $subscriptedAt = null;
+    #[ORM\Column]
+    private ?\DateTimeImmutable $subscribedAt = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'playlistSubscription')]
-    private Collection $subscriber;
+    #[ORM\ManyToOne(inversedBy: 'playlistSubscriptions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $subscriber = null;
 
-    /**
-     * @var Collection<int, Playlist>
-     */
-    #[ORM\OneToMany(targetEntity: Playlist::class, mappedBy: 'playlistSubscription')]
-    private Collection $playlist;
-
-    public function __construct()
-    {
-        $this->subscriber = new ArrayCollection();
-        $this->playlist = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'playlistSubscriptions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Playlist $playlist = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getSubscriptedAt(): ?\DateTimeInterface
+    public function getSubscribedAt(): ?\DateTimeImmutable
     {
-        return $this->subscriptedAt;
+        return $this->subscribedAt;
     }
 
-    public function setSubscriptedAt(\DateTimeInterface $subscriptedAt): static
+    public function setSubscribedAt(\DateTimeImmutable $subscribedAt): static
     {
-        $this->subscriptedAt = $subscriptedAt;
+        $this->subscribedAt = $subscribedAt;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getSubscriber(): Collection
+    public function getSubscriber(): ?User
     {
         return $this->subscriber;
     }
 
-    public function addSubscriber(User $subscriber): static
+    public function setSubscriber(?User $subscriber): static
     {
-        if (!$this->subscriber->contains($subscriber)) {
-            $this->subscriber->add($subscriber);
-            $subscriber->setPlaylistSubscription($this);
-        }
+        $this->subscriber = $subscriber;
 
         return $this;
     }
 
-    public function removeSubscriber(User $subscriber): static
-    {
-        if ($this->subscriber->removeElement($subscriber)) {
-            // set the owning side to null (unless already changed)
-            if ($subscriber->getPlaylistSubscription() === $this) {
-                $subscriber->setPlaylistSubscription(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Playlist>
-     */
-    public function getPlaylist(): Collection
+    public function getPlaylist(): ?Playlist
     {
         return $this->playlist;
     }
 
-    public function addPlaylist(Playlist $playlist): static
+    public function setPlaylist(?Playlist $playlist): static
     {
-        if (!$this->playlist->contains($playlist)) {
-            $this->playlist->add($playlist);
-            $playlist->setPlaylistSubscription($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlaylist(Playlist $playlist): static
-    {
-        if ($this->playlist->removeElement($playlist)) {
-            // set the owning side to null (unless already changed)
-            if ($playlist->getPlaylistSubscription() === $this) {
-                $playlist->setPlaylistSubscription(null);
-            }
-        }
+        $this->playlist = $playlist;
 
         return $this;
     }
