@@ -3,9 +3,23 @@ App\Entity\Playlist:
     name: "<name()>"
     created_at: "<datetime()>"
     updated_at: "<datetime()>"
-    creator: '@user*'
-    playlistMedia: '@media*'
+    creator: '@user_*'
+    playlistMedia:
+      - '@playlistMediaSerie_*'
+      - '@playlistMediaMovie_*'
 
 App\Entity\PlaylistMedia:
-    playlist_media_{1..50}:
-        media: '@media*'
+    playlistMediaSerie_{1..50}:
+      addedAt: "<datetime()>"
+      playlist: '@playlist_*'
+      media: '@serie*'
+    playlistMediaMovie_{1..50}:
+      addedAt: "<datetime()>"
+      playlist: '@playlist_*'
+      media: '@movie*'
+
+App\Entity\PlaylistSubscription:
+    playlistSubscription_{1..50}:
+      subscribedAt: "<datetime()>"
+      subscriber: '@user_*'
+      playlist: '@playlist_*'
