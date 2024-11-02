@@ -1,0 +1,11 @@
+App\Entity\Playlist:
+  playlist_{1..50}:
+    name: "<name()>"
+    created_at: "<datetime()>"
+    updated_at: "<datetime()>"
+    creator: '@user*'
+    playlistMedia: '@media*'
+
+App\Entity\PlaylistMedia:
+    playlist_media_{1..50}:
+        media: '@media*'
