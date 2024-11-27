@@ -4,7 +4,7 @@ App\Entity\Media:
     shortDescription: "short description <current()>"
     longDescription: "long description <current()>"
     releaseDate: "<datetime()>"
-    cover_image: "https://picsum.photos/300/400"
+    cover_image: 'https://picsum.photos/400/550?random=<numberBetween(1, 100)>'
     categories:
       - '@category_action'
       - '@category_adventure'
@@ -13,23 +13,28 @@ App\Entity\Media:
       - '@lang_en'
 
 App\Entity\Movie:
-  movie{1..50} (extends media):
+  media_movie{1..50} (extends media):
     title: "Film <current()> - <name()>"
 
 App\Entity\Serie:
-  serie{1..50} (extends media):
+  media_serie{1..50} (extends media):
     title: "Serie <current()> - <name()>"
 
 App\Entity\Season:
-  season{1..50}:
+  season_{1..2}_{@media_serie*}:
     number: "<numberBetween(1, 10)>"
-    serie: '@serie*'
+    serie: '@media_serie*'
 
 App\Entity\Episode:
-  episode{1..50}:
-    title: "Episode <current()> - <name()>"
+  episode_{1..50}:
+    title: "Episode <current()> - <sentence()>"
     duration: "<numberBetween(10, 60)>"
-    releasedAt: "<datetime()>"
-    season: '@season*'
+    releasedAt: "<dateTimeBetween('-1 week', '+1 week')>"
+    season: '@season_*'
 
-
+App\Entity\WatchHistory:
+  watch_history_{1..50}:
+    lastWatchedAt: "<dateTimeBetween('-1 week', '+1 week')>"
+    numberOfViews: "<numberBetween(1, 100)>"
+    watcher: '@user_*'
+    media: '@media_*'

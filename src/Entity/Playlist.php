@@ -38,7 +38,7 @@ class Playlist
      * @var Collection<int, PlaylistMedia>
      */
     #[ORM\OneToMany(targetEntity: PlaylistMedia::class, mappedBy: 'playlist')]
-    private Collection $playlistMedia;
+        private Collection $playlistMedia;
 
     public function __construct()
     {

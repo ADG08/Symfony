@@ -3,8 +3,10 @@ App\Entity\User:
     username: "<name()>"
     email: "<email()>"
     password: "<password()>"
+    currentSubscription: '@subscription_*'
 
   admin:
     username: "admin"
     email: "admin@admin.fr"
     password: "admin"
+

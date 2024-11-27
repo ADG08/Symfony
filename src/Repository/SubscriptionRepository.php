@@ -17,7 +17,7 @@ class SubscriptionRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return Subscription[] Returns an array of Subscription objects
+    //     * @return Subscription.yaml[] Returns an array of Subscription.yaml objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class SubscriptionRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Subscription
+    //    public function findOneBySomeField($value): ?Subscription.yaml
     //    {
     //        return $this->createQueryBuilder('s')
     //            ->andWhere('s.exampleField = :val')

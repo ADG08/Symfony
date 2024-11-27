@@ -11,3 +11,6 @@ App\Entity\Language:
   lang_es:
     nom: "es"
     code: "ES"
+  lang_pt:
+    nom: "pt"
+    code: "PT"
