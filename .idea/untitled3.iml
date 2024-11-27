@@ -146,6 +146,7 @@
       <excludeFolder url="file://$MODULE_DIR$/my_project_directory/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/my_project_directory/vendor/symfony/flex" />
       <excludeFolder url="file://$MODULE_DIR$/my_project_directory/vendor/symfony/runtime" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfonycasts/verify-email-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
