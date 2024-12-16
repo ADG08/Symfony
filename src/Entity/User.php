@@ -8,12 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -66,7 +67,7 @@ class User implements UserInterface
     private Collection $watchHistories;
 
     #[ORM\Column]
-    private array $role = [];
+    private array $roles = [];
 
     #[ORM\Column]
     private bool $isVerified = false;
@@ -297,7 +298,11 @@ class User implements UserInterface
 
     public function getRoles(): array
     {
-        return $this->role;
+
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return $this->roles;
     }
 
     public function eraseCredentials(): void
@@ -309,14 +314,9 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function getRole(): array
+    public function setRole(array $roles): static
     {
-        return $this->role;
-    }
-
-    public function setRole(array $role): static
-    {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
