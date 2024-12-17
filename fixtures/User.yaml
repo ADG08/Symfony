@@ -4,11 +4,11 @@ App\Entity\User:
     email: "<email()>"
     password: "<password()>"
     currentSubscription: '@subscription_*'
-    role: ['ROLE_USER']
+    roles: ['ROLE_USER']
 
   admin:
     username: "admin"
     email: "admin@admin.fr"
-    password: "admin"
-    role: ['ROLE_ADMIN']
-
+    password: '\$2y\$13\$ylhamXI.kWLkWV1wHew20.ICyujuDG.2aN7CY1A4duchYWTWTNPfG'
+    currentSubscription: '@subscription_*'
+    roles: ['ROLE_ADMIN']
