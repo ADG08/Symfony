@@ -60,9 +60,16 @@
 
                 <div class="relative w-full flex text-gray-700 font-medium">
                     <select class="appearance-none w-full bg-white border border-gray-200 px-7 py-3 rounded-md shadow transition">
-                        <option>#1 - Ma liste custom (43 films & 12 séries)</option>
-                        <option>#2 - Film aviations (14 films & 29 séries)</option>
-                        <option>#3 - Film a voir avec les potos (14 films & 10 séries) - Liste de John Doe</option>
+                        {% if app.user %}
+                            {% for playlist in app.user.playlists %}
+                                <option>{{ playlist.name }}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option>Choisir une liste</option>
+                            <option>#1 - Ma liste custom (43 films & 12 séries)</option>
+                            <option>#2 - Film aviations (14 films & 29 séries)</option>
+                            <option>#3 - Film a voir avec les potos (14 films & 10 séries) - Liste de John Doe</option>
+                        {% endif %}
                     </select>
                     <div class="pointer-events-none absolute right-2 inset-y-0 flex items-center px-2">
                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down-circle</title><path d="M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M6,10L12,16L18,10L16.6,8.6L12,13.2L7.4,8.6L6,10Z" /></svg>
@@ -72,27 +79,22 @@
         </section>
 
         <section class="mt-9">
-            <ul class="grid grid-cols-2 gap-y-5 sm:grid-cols-3 gap-x-5">
+                <ul class="grid grid-cols-2 gap-y-5 sm:grid-cols-3 gap-x-5">
 
-                <!--
-                {% if app.user %}
-                {% for playlist in playlists %}
-                    {% for movie in playlist.playlistMedia %}
-                    {% include 'parts/movie/card_movie.html.twig' %}
-                    {% endfor %}
-                {% endfor %}
+                    {% if app.user %}
+                        {% for playlist in app.user.playlists %}
+                            {% for playlist in playlist.playlistMedia %}
+                                {% set movie = playlist.media %}
+                                {% include 'parts/movie/card_movie.html.twig' %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        {% for movie in medias %}
+                        {% include 'parts/movie/card_movie.html.twig' %}
+                        {% endfor %}
+                    {% endif %}
 
-                {% else %}
-                {% for movie in medias %}
-                {% include 'parts/movie/card_movie.html.twig' %}
-                {% endfor %}
-                {% endif %}
-                -->
-
-                {% for movie in medias %}
-                    {% include 'parts/movie/card_movie.html.twig' %}
-                {% endfor %}
-            </ul>
+                </ul>
             <button class="flex flex-col items-center mt-9 w-full">
                 <div class="relative flex w-full bg-red-600 flex-row p-3 items-center justify-center rounded-lg overflow-hidden border cursor-pointer transition hover:bg-red-700 text-white">
                     <span class="font-bold mr-2">

@@ -4,16 +4,15 @@ App\Entity\Playlist:
     createdAt: '<dateTimeBetween("-1 year", "now")>'
     updatedAt: '<dateTimeBetween("now", "+1 year")>'
     creator: '@user_*'
-#     playlistSubscription: '@playlist_subscription_*'
-#     playlistMedia: '@playlist_media_*'
 
-# App\Entity\PlaylistMedia:
-#  playlist_media_{1..50}:
-#     addedAt: '<dateTimeBetween("-1 year", "now")>'
-#     playlist: '@playlist_*'
-#     media: '@media_*'
+App\Entity\PlaylistMedia:
+  playlist_media_{1..50}:
+    addedAt: '<dateTimeBetween("-1 year", "now")>'
+    playlist: '@playlist_<randomNumber(1,50)>'
+    media: '@media_*'
 
-# App\Entity\PlaylistSubscription:
-#   playlist_subscription_{1..50}:
-#     subscribedAt: '<dateTimeBetween("-1 year", "now")>'
-#     subscriber: '@user_*'
+App\Entity\PlaylistSubscription:
+  playlist_subscription_{1..50}:
+    subscribedAt: '<dateTimeBetween("-1 year", "now")>'
+    playlist: '@playlist_<randomNumber(1,50)>'
+    subscriber: '@user_*'
